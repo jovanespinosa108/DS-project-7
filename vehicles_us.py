@@ -2,10 +2,13 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+# Cargar csv file
 car_data = pd.read_csv('vehicles_us.csv')
 
+# Crear encabezado
 st.header('Analisis de Vehiculos Usados en USA')
 
+# Crear boton para histogama (checkbox)
 hist_button = st.checkbox('Crea Histograma del Tipo de Vehiculos')
 
 if hist_button:
@@ -37,15 +40,19 @@ if scatter_plot_button:
     # Muestra el grafico
     st.plotly_chart(fig_2, use_container_width=True)
 
+# Crear checkbox para Grafica de pastel
 if st.checkbox('Crea pie plot de'):
     st.write("Este grafico de pastel muestra los autos Automaticos, Manuales, etc.")
 
+    # Crea grafica de pastel
     fig = px.pie(car_data, names='transmission', title='Tipos de transmision de vehiculos')
     st.plotly_chart(fig)
 
+# Crea checkbox para grafico de barras
 if st.checkbox('Crea grafico de barras de combustible'):
     st.write('Muestra que combustibles son mas usados (gasolina, diesel, electrico, etc)')
 
+    # Crea Grafico de barras
     fig = px.bar(
         car_data['fuel'].value_counts().reset_index(),
         x='count',
@@ -56,10 +63,11 @@ if st.checkbox('Crea grafico de barras de combustible'):
 
     st.plotly_chart(fig)
 
-
+# Crea checkbox para Boxplot
 if st.checkbox('Crea Boxplot de precio en base a condicion'):
     st.write('Muestra la variacion de precio de los autos en base a su condicion')
 
+    # Crea Boxplot
     fig = px.box(car_data,
                  x='condition',
                  y='price',
